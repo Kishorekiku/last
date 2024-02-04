@@ -1,11 +1,10 @@
 from flask import Flask, request, jsonify
-import requests
+from datetime import datetime
 
 app = Flask(__name__)
 
 def is_trusted_url(url):
-    # You can implement your logic to check whether the URL is trusted or fake
-    # For simplicity, let's just check if the URL starts with "https://" as an example
+    # Your URL trust verification logic here
     return url.startswith("https://")
 
 @app.route('/check_url', methods=['POST'])
@@ -20,6 +19,10 @@ def check_url():
 
     return jsonify({'url': url, 'is_trusted': is_trusted})
 
+@app.route('/current_time', methods=['GET'])
+def current_time():
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return jsonify({'current_time': current_time})
+
 if __name__ == '__main__':
     app.run(debug=True)
-
